@@ -1,0 +1,28 @@
+//
+// libqdp (Sony Xperia XZ1 / poplar), rebuilt from a Ghidra decompilation.
+// Replaces the stock prebuilt in yoshino-common; remove that entry before use.
+//
+
+cc_library_shared {
+    name: "libqdp",
+    owner: "sony",
+    vendor: true,
+    srcs: [
+        "libqdp_recon.c",
+        "data/qdp_data.S",
+    ],
+    cflags: [
+        "-w",
+    ],
+    shared_libs: [
+        "libdiag",
+        "libdsutils",
+        "libcutils",
+        "libqmiservices",
+        "libqmi_cci",
+        "libqmi_common_so",
+        "libqmi_client_helper",
+    ],
+    compile_multilib: "64",
+    soc_specific: true,
+}
