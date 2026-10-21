@@ -11,9 +11,6 @@ cc_library_shared {
         "libqdp_recon.c",
         "data/qdp_data.S",
     ],
-    cflags: [
-        "-w",
-    ],
     shared_libs: [
         "libdiag",
         "libdsutils",

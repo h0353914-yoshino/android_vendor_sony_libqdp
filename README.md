@@ -15,6 +15,6 @@ Ghidra decompilation of Qualcomm/Sony `libqdp.so` (arm64, stock sha1 `f83527aa6b
 
 ## Verification
 
-- Differential tests against the stock library: 800 random cases per function over 67 functions, 0 differences. These run with simulated QMI responses and do not exercise the data relocations.
+- Differential tests against the stock library: 100 random cases per function over 67 functions (the harness skips 3), 0 differences, with simulated QMI responses. These do not exercise the data relocations.
 - Data image: all 1441 stock pointer relocations are present with the same targets. An earlier build lost about 700 of them (a chunking bug in `build_data.py`), which crashed qcrild at startup; the differential tests did not catch it.
 - On device (G8342, BH90018Q63): boots, LTE attaches, no qcrild crashes across boot, airplane mode toggle and an APN change.
