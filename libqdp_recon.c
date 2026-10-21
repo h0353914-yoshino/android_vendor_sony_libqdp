@@ -1047,7 +1047,7 @@ long qdp_cleanup_profile_ids(void)
   lVar4 = 0;
   do {
     if (((char*)&DAT_0012a9a4)[lVar4] == '\x01') {
-      ((ulong *)((uint8_t *)frame - 0x278))[0] = (ulong)*(uint5 *)((long)&DAT_0012a9a8 + lVar4);
+      ((ulong *)((uint8_t *)frame - 0x278))[0] = (ulong)*(uint32_t *)((long)&DAT_0012a9a8 + lVar4) | ((ulong)*(uint8_t *)((long)&DAT_0012a9a8 + lVar4 + 4) << 32);
       iVar3 = qdp_qmi_wds_delete_profile(*(undefined8 *)puVar2,(long)(((ulong *)((uint8_t *)frame - 0x278))));
       if (iVar3 == 1) {
         *(undefined8 *)((long)&DAT_0012a9d8 + lVar4) = 0;
