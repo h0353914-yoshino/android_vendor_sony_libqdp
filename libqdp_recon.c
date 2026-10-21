@@ -1996,7 +1996,7 @@ long qdp_3gpp_profile_fill_common_params(struct qdp_ril_param *param_1, uint32_t
         case 8:
           if (isAPAssistMode != '\0' && 0 < param_1->length && (mask = strtoul(param_1->value, NULL, 0), 1 < mask + 1))
           {
-            mod->apn_type_mask_valid = 1;
+            mod->apn_type_mask_valid = 0;
             mod->apn_type_mask = mask;
             if (qres.apn_type_mask_valid != '\0' && mask != qres.apn_type_mask)
             {
@@ -4577,7 +4577,7 @@ long qdp_3gpp_profile_create(struct qdp_ril_param *param_1, uint *param_2, int *
           case 8:
             if (isAPAssistMode != '\0' && 0 < param_1->length)
             {
-              req.apn_type_mask_valid = 1;
+              req.apn_type_mask_valid = 0;
               req.apn_type_mask = strtoul(param_1->value, NULL, 0);
             }
             break;
