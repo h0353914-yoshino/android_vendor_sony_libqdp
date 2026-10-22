@@ -3258,6 +3258,20 @@ long qdp_profile_release_ex(uint32_t param_1)
   return uVar2;
 }
 
+static int qdp_profile1_apn_empty(void)
+{
+  struct qdp_query_req qreq;
+  struct qdp_query_res qres;
+
+  memset(&qreq, 0, sizeof qreq);
+  memset(&qres, 0, sizeof qres);
+  qreq.profile_type = 0;
+  qreq.profile_index = 1;
+  if (qdp_qmi_wds_query_profile(global_qmi_wds_hndl, (long)&qreq, (int *)&qres) != 1)
+    return 0;
+  return qres.apn_name_valid == '\0' || qres.apn_name[0] == '\0';
+}
+
 long qdp_lte_attach_profile_lookup(long param_1, int *param_2, long param_3, long param_4, uint8_t *param_5, int *param_6)
 
 {
@@ -3410,7 +3424,17 @@ long qdp_lte_attach_profile_lookup(long param_1, int *param_2, long param_3, lon
       if (iVar8 != -1)
         goto LAB_001139d4;
     LAB_00113a6c:
-      iVar8 = qdp_get_ia_type_profile_id((frame - 0xf68));
+      if (qdp_profile1_apn_empty())
+      {
+        /* The modem holds LTE attach until profile 1 is written; fill an empty profile 1
+           (no Profile1 in the carrier fsg) instead of using or creating another profile. */
+        (*(int *)((frame - 0xf68))) = 1;
+        iVar8 = 1;
+      }
+      else
+      {
+        iVar8 = qdp_get_ia_type_profile_id((frame - 0xf68));
+      }
       iVar7 = (*(int *)((frame - 0xf68)));
       if (iVar8 != 1)
       {
